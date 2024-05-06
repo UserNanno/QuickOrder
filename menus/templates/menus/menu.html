@@ -1,0 +1,26 @@
+<!-- menus/menu.html -->
+{% extends 'base.html' %}
+{% block content %}
+<form method="post" action="{% url 'submit_order' %}">
+  {% csrf_token %}
+  {% for item in menu_items %}
+  <div>
+    <input type="checkbox" name="menu_item" value="{{ item.id }}">
+    <strong>{{ item.name }}</strong> - {{ item.description }} - ${{ item.price }}
+  </div>
+  {% endfor %}
+  <button type="submit">Submit Order</button>
+</form>
+<div>
+  {% if user.is_authenticated %}
+  <strong>Bienvenido, {{ user.username }}!</strong>
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Cerrar Sesión</button>
+  </form>
+  {% else %}
+  <a href="{% url 'login' %}">Iniciar Sesión</a>
+  <a href="{% url 'signup' %}">Registrarse</a>
+  {% endif %}
+</div>
+{% endblock %}

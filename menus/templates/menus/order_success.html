@@ -1,0 +1,18 @@
+<!-- menus/order_success.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>¡Pedido completado con éxito!</h2>
+<p>Gracias por tu pedido.</p>
+<div>
+    {% if user.is_authenticated %}
+    <strong>Bienvenido, {{ user.username }}!</strong>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Cerrar Sesión</button>
+    </form>
+    {% else %}
+    <a href="{% url 'login' %}">Iniciar Sesión</a>
+    <a href="{% url 'signup' %}">Registrarse</a>
+    {% endif %}
+</div>
+{% endblock %}
